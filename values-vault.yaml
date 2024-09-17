@@ -1,0 +1,79 @@
+global:
+  namespace: "vault"
+  
+server:
+  # Ingress Configuration
+  ingress:
+    enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: "letsencrypt" # If you've setuped cert manager
+      cert-manager.io/common-name: "vault.<yourorganization>.com" # If you've setuped cert manager
+    ingressClassName: "nginx"
+    activeService: true
+    hosts:
+      - host: vault.yourorganization.com
+        paths: []
+    tls:
+      - secretName: <yourorganizatio>n-tls
+        hosts:
+          - vault.<yourorganization>.com
+
+  # Extra labels to attach to the server pods
+  # This should be a YAML map of the labels to apply to the server pods  
+  extraLabels:
+    azure.workload.identity/use: "true"
+
+  ha:
+    enabled: true
+    replicas: 3
+    raft:
+      enabled: true
+      setNodeId: true
+      config: |
+        ui = true
+        listener "tcp" {
+          address = "0.0.0.0:8200"
+          cluster_address = "0.0.0.0:8201"
+          tls_disable = 1
+        }
+        storage "raft" {
+          path = "/vault/data"
+
+          retry_join {
+          leader_api_addr = "http://vault-0.vault-internal:8200"
+          }
+          retry_join {
+          leader_api_addr = "http://vault-1.vault-internal:8200"
+          }
+          retry_join {
+          leader_api_addr = "http://vault-2.vault-internal:8200"
+          }                    
+        }
+        seal "azurekeyvault" {
+          vault_name = "autoscheduler-ops-vault"
+          key_name   = "vault-unseal-key"
+          client_id  = "bae7dae8-cd79-4859-858d-8b8f25e86dc1"
+        }
+        
+        service_registration "kubernetes" {}      
+
+  dataStorage:
+    enabled: true
+    # Size of the PVC created
+    size: 10Gi
+
+  # Definition of the serviceAccount used to run Vault.
+  # These options are also used when using an external Vault server to validate
+  # Kubernetes tokens.
+  serviceAccount:
+    create: true
+    name: "vault"
+    createSecret: false
+    # Extra annotations for the serviceAccount definition.
+    annotations:
+      azure.workload.identity/client-id: "bae7dae8-cd79-4859-858d-8b8f25e86dc1"
+     # This should be a YAML map of the labels to apply to the serviceAccount 
+    extraLabels:
+      azure.workload.identity/use: "true"
+    serviceDiscovery:
+      enabled: true
