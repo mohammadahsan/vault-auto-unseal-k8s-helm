@@ -265,7 +265,7 @@ Recovery Key 1: FFMLznSZq9wh/0CJwKLJWKkI9BrK/hjF6ySDYl9a19Ie
 Recovery Key 2: qRfrdpkuEcXsF+dFh1Geru8VHkiL/hWUW+vY25twlwT1
 Recovery Key 3: dX8sed7Dv8kI8kfFuYWDeQlagoikEVBpV5lZqH4ORnEh
 
-Initial Root Token: hvs.6umGyyta9xrjq0q7Cv09Hr8X
+Initial Root Token: XxxxxxxxxXXXXxxxxxxx
 
 Success! Vault is initialized
 ```
