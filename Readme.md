@@ -2,6 +2,22 @@
 
 This repository provides a Helm chart to deploy HashiCorp Vault on Kubernetes with the auto-unseal feature enabled. It includes a step-by-step guide to help users deploy, configure, and troubleshoot Vault in their Kubernetes environments, leveraging cloud-based auto-unseal mechanisms like Azure Key Vault, AWS KMS, and GCP KMS. .
 
+## Table of Contents
+
+- [Kubernetes Helm Chart for HashiCorp Vault with Auto-Unseal using WorkLoad Identity](#kubernetes-helm-chart-for-hashicorp-vault-with-auto-unseal-using-workload-identity)
+  - [Assuming You Have](#assuming-you-have)
+  - [What We will be covering :](#what-we-will-be-covering-:)
+    - [Enable OIDC issuer for your Cluster](#enable-oidc-issuer-for-your-cluster)
+    - [Create a Workload Identity](#create-a-workload-identity)
+    - [Create a Federated Credetials](#create-a-federated-credetials)
+    - [Assing the Role Key Vault Crypto officer](#assing-the-role-key-vault-crypto-officer)
+    - [Create an RSA Key in Azure Key Vault](#create-an-rsa-key-in-azure-key-vault)
+    - [Pull the Latest Vault helm Chart](#pull-the-latest-vault-helm-chart)
+    - [Chart Values Explanation](#chart-values-explanation)
+    - [Deploy the Helm Chart i.e Vault Cluster](#deploy-the-helm-chart-i.e-vault-cluster)
+    - [Initializing vault](#initializing-vault)
+      - [Congrats You've Enabled Deployed Vault in HA mode with Raft Storage and your AutoUnseal is working as expected.](#congrats-you've-enabled-deployed-vault-in-ha-mode-with-raft-storage-and-your-autounseal-is-working-as-expected.)
+
 ## Assuming You Have
 
 - [ ] A Kubernetes Cluster
