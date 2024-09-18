@@ -50,9 +50,9 @@ server:
           }                    
         }
         seal "azurekeyvault" {
-          vault_name = "autoscheduler-ops-vault"
+          vault_name = "<YourVaultName>"
           key_name   = "vault-unseal-key"
-          client_id  = "bae7dae8-cd79-4859-858d-8b8f25e86dc1"
+          client_id  = "bae7dae8-XXXXX-4859-XXXX-8b8f25e86dc1"
         }
         
         service_registration "kubernetes" {}      
@@ -71,7 +71,7 @@ server:
     createSecret: false
     # Extra annotations for the serviceAccount definition.
     annotations:
-      azure.workload.identity/client-id: "bae7dae8-cd79-4859-858d-8b8f25e86dc1"
+      azure.workload.identity/client-id: "bae7dae8-XXXX-4859-XXXX-8b8f25e86dc1"
      # This should be a YAML map of the labels to apply to the serviceAccount 
     extraLabels:
       azure.workload.identity/use: "true"
